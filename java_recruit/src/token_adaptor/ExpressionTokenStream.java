@@ -2,8 +2,7 @@ package token_adaptor;
 
 import java.io.IOException;
 import java.io.InputStream;
-import token_adaptor.Token;
-import token_adaptor.TokenStream;
+
 import static token_adaptor.Token.TokenType.INT;
 import static token_adaptor.Token.TokenType.NONE;
 
@@ -11,14 +10,14 @@ public class ExpressionTokenStream  implements TokenStream{
 
 	private byte[] buffer;
 	private InputStream in;
-	private Token currentToken; //ÓÎ±ê£¬Ö¸Ïòµ±Ç°token¶ÔÏó
+	private Token currentToken; //æ¸¸æ ‡ï¼ŒæŒ‡å‘å½“å‰tokenå¯¹è±¡
 	private int length = 0;
 	private int tpos = 0;
 	
 	public ExpressionTokenStream(InputStream in) throws IOException {
 		buffer = new byte[1024];
 		this.in = in;
-		consumeToken(); //µ±Ç°ÓÎ±ê³õÊ¼Ò²Îª¿Õ£¬ËùÒÔÒª³õÊ¼»¯Ò»ÏÂ
+		consumeToken(); //å½“å‰æ¸¸æ ‡åˆå§‹ä¹Ÿä¸ºç©ºï¼Œæ‰€ä»¥è¦åˆå§‹åŒ–ä¸€ä¸‹
 	}
 	
 
@@ -34,16 +33,16 @@ public class ExpressionTokenStream  implements TokenStream{
 
 
 	private Token getNextToken() throws IOException {
-		//³õÊ¼bufferÎª¿Õ£¬ÓÉin¶ÁÈë×Ö½Ú£¬Í¬Ê±»ñÈ¡³¤¶È
+		//åˆå§‹bufferä¸ºç©ºï¼Œç”±inè¯»å…¥å­—èŠ‚ï¼ŒåŒæ—¶è·å–é•¿åº¦
 		if(length == 0) length = in.read(buffer);
-		//Èç¹û¶ÁÈëºóÈÔÎª¿Õ£¬·µ»Ø¿Õ
+		//å¦‚æœè¯»å…¥åä»ä¸ºç©ºï¼Œè¿”å›ç©º
 		if(length == 0) return null;
 		
 		while(tpos < length) {
-			//ÏÈÅĞ¶ÏÊÇ²»ÊÇ»Ø³µ£¬ÒòÎª¿ÉÄÜÖ±½ÓÇÃ»Ø³µÊäÈë¿Õ×Ö½Ú
+			//å…ˆåˆ¤æ–­æ˜¯ä¸æ˜¯å›è½¦ï¼Œå› ä¸ºå¯èƒ½ç›´æ¥æ•²å›è½¦è¾“å…¥ç©ºå­—èŠ‚
 			if (buffer[tpos] == '\n')
 				return new Token(NONE,"");
-			//ºöÂÔ¿Õ¸ñ¡¢\t¡¢\r
+			//å¿½ç•¥ç©ºæ ¼ã€\tã€\r
 			 while (isSpace((char) buffer[tpos])) {
 	                tpos++;
 	         }
@@ -80,7 +79,7 @@ public class ExpressionTokenStream  implements TokenStream{
 	            
 	            if (isNumber(buffer[tpos])) {
 	            	int t = 0;
-	            	//ĞèÒªËã³öÊäÈëµÄÊı×ÖÊÇ¼¸£¬È»ºóÔÙ·µ»Ø
+	            	//éœ€è¦ç®—å‡ºè¾“å…¥çš„æ•°å­—æ˜¯å‡ ï¼Œç„¶åå†è¿”å›
 	            	while (isNumber(buffer[tpos])) {
 	            		t = t * 10 + (buffer[tpos] - '0');
 	            		tpos++;
@@ -89,7 +88,7 @@ public class ExpressionTokenStream  implements TokenStream{
 	            }
 		}
 		
-		//Ä¬ÈÏreturn null
+		//é»˜è®¤return null
 		return null;		
 	}
 	
