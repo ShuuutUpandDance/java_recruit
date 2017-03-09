@@ -3,13 +3,14 @@ package binarytree;
 /**
  * Created by Zhang on 2017/3/7.
  */
-public class Node {
-    public Object data;
-    public Node left;
-    public Node right;
+public class Node<T>{
+    public T data;
+    public Node<T> left;
+    public Node<T> right;
+    public Node<T> parent;
     public int state;
 
-    public Node(Object d) {
+    public Node(T d) {
         this.data = d;
     }
 }

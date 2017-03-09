@@ -1,34 +1,38 @@
 package binarytree;
 
-import stack_work.Stack;
+import java.util.Iterator;
+import java.util.Stack;
 
 /**
  * Created by Zhang on 2017/3/7.
  */
 public class Main {
-    public static Node createBST () {
-        Node root = new Node(3);
-        root.left = new Node(1);
-        root.right = new Node(5);
-        root.left.right = new Node(2);
-        root.right.left = new Node(4);
-        return root;
+    public static BinarySearchTree<Integer> createBST () {
+        BinarySearchTree<Integer> tree = new BinarySearchTree<>();
+        tree.insert(3);
+        tree.insert(2);
+        tree.insert(1);
+        tree.insert(5);
+        tree.insert(4);
+        tree.insert(6);
+        return tree;
     }
 
     public static void main(String[] args) {
-        Stack<Node>s = new Stack<>(10);
-        BinarySearchTree tree = new BinarySearchTree(createBST());
+        Stack<Node<Integer>>s = new Stack<>();
+        BinarySearchTree<Integer> tree = createBST();
 
-        tree.preOrder(tree.root);
-        System.out.print("\n");
-        tree.midOrder(tree.root);
-        System.out.print("\n");
-        tree.postOrder(tree.root);
-        System.out.print("\n");
-        tree.preOrderWithoutRecur(tree.root);
-        System.out.print("\n");
-        tree.midOrderWithoutRecur(tree.root);
-        System.out.print("\n");
-        tree.LayerTraverse(tree.root);
+
+        System.out.println("Iterator: ");
+        Iterator<Node<Integer>> iterator = tree.iterator();
+        Iterator<Node<Integer>> ii = tree.iterator();
+        while (ii.hasNext()) {
+            Node<Integer> r = ii.next();
+            if (r.data == 5) tree.remove(r);
+        }
+        while (iterator.hasNext()){
+            System.out.print(iterator.next().data);
+        }
+
     }
 }

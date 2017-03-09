@@ -1,7 +1,12 @@
 package token_adaptor;
 
-public class Token {	
-	    public enum TokenType {
+public class Token implements Comparable<Token> {
+	@Override
+	public int compareTo(Token t) {
+		return 0;
+	}
+
+	public enum TokenType {
 	        LPAR, RPAR,
 	        PLUS,
 	        MINUS,
