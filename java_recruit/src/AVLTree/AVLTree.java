@@ -121,28 +121,7 @@ public class AVLTree <T extends Comparable<T>>{
             }
         }
         /* 这里要做一些特殊的处理了 */
-        /* 从插入的过程回溯回来的时候，计算平衡因子 */
-        root.balance = calcBalance(root);
-
-	/* 左子树高，应该右旋 */
-        if (root.balance >= 2) {
-	    /* 右孙高，先左旋 */
-            if (root.left.balance == -1)
-                left_rotate(root.left);
-
-            right_rotate(root);
-        }
-
-        if (root.balance <= -2)
-        {
-            if (root.right.balance == 1)
-                right_rotate(root.right);
-
-            left_rotate(root);
-        }
-
-        root.balance = calcBalance(root);
-        root.depth = calcDepth(root);
+      adjust(root);
     }
 
     /**
